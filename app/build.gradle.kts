@@ -1,6 +1,22 @@
+import org.jetbrains.kotlin.konan.properties.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+}
+
+private object BuildTypes {
+    const val DEBUG = "debug"
+    const val RELEASE = "release"
+}
+
+private object ProductFlavors {
+    const val QA = "qa"
+    const val PRODUCTION = "production"
+}
+
+private object FlavorDimensions {
+    const val DEFAULT = "default"
 }
 
 android {
@@ -18,6 +34,13 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+    }
+
+    flavorDimensions.add(FlavorDimensions.DEFAULT)
+
+    productFlavors {
+        create(ProductFlavors.QA) {}
+        create(ProductFlavors.PRODUCTION) {}
     }
 
     buildTypes {
