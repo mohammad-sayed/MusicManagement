@@ -1,4 +1,4 @@
-package com.ms.musicmanagement.ui.theme
+package com.ms.musicmanagement.shared.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
