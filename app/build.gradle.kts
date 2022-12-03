@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.ApplicationDefaultConfig
+import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
@@ -34,6 +36,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        prepareLastFMKeys(applicationDefaultConfig = this)
     }
 
     flavorDimensions.add(FlavorDimensions.DEFAULT)
@@ -46,12 +49,15 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles (
+            proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
+
+    prepareBaseUrl(baseAppModuleExtension = this)
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -70,6 +76,41 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+
+/***
+ * Create BASE_URL for API requests
+ */
+fun prepareBaseUrl(baseAppModuleExtension: BaseAppModuleExtension){
+    val gradleProperties = Properties().apply {
+        load(project.rootProject.file("gradle.properties").inputStream())
+    }
+    baseAppModuleExtension.productFlavors.forEach { flavor ->
+        val baseUrl = gradleProperties.getProperty("${flavor.name}_base_url")
+        flavor.buildConfigField("String", "BASE_URL", baseUrl)
+    }
+}
+
+/***
+ * Create needed Keys for LastFM API requests
+ */
+fun prepareLastFMKeys(applicationDefaultConfig: ApplicationDefaultConfig) {
+    val localProperties = Properties().apply {
+        val file = project.rootProject.file("local.properties")
+        if (file.exists()) {
+            load(file.inputStream())
+        }
+    }
+    val lastFMApiKey = localProperties.getProperty("LAST_FM_API_KEY")
+    if (lastFMApiKey.isNullOrEmpty()) {
+        throw RuntimeException("Couldn't find LastFM API Key.")
+    }
+    applicationDefaultConfig.buildConfigField("String", "LAST_FM_API_KEY", lastFMApiKey)
+    val lastFMSharedSecret = localProperties.getProperty("LAST_FM_SHARED_SECRET")
+    if (lastFMSharedSecret.isNullOrEmpty()) {
+        throw RuntimeException("Couldn't find LastFM Shared Secret.")
+    }
+    applicationDefaultConfig.buildConfigField("String", "LAST_FM_SHARED_SECRET", lastFMApiKey)
 }
 
 dependencies {
