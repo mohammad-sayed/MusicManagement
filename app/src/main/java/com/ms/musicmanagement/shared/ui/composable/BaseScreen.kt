@@ -16,4 +16,7 @@ fun BaseScreen(
             viewModel.resetGeneralError()
         }
     )
+    if (viewModel.showLoading.collectAsState().value) {
+        LoadingProgress()
+    }
 }
