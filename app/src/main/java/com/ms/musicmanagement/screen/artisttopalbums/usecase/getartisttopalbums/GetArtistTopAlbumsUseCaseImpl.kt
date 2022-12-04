@@ -1,4 +1,4 @@
-package com.ms.musicmanagement.screen.artisttopalbums.getartisttopalbums
+package com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums
 
 import com.ms.musicmanagement.shared.model.backend.ImageSize
 import com.ms.musicmanagement.shared.model.business.dto.AlbumDto

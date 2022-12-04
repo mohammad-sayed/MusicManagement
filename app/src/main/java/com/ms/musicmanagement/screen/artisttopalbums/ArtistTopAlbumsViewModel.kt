@@ -3,7 +3,7 @@ package com.ms.musicmanagement.screen.artisttopalbums
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.viewModelScope
-import com.ms.musicmanagement.screen.artisttopalbums.getartisttopalbums.GetArtistTopAlbumsUseCase
+import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCase
 import com.ms.musicmanagement.screen.artisttopalbums.mapper.ArtistTopAlbumsMapper
 import com.ms.musicmanagement.screen.artisttopalbums.uimodel.AlbumUiModel
 import com.ms.musicmanagement.shared.base.BaseViewModel

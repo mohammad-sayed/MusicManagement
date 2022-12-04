@@ -2,8 +2,8 @@ package com.ms.musicmanagement.koin
 
 import com.ms.musicmanagement.screen.artistsearch.usecase.searchforartist.SearchForArtistUseCase
 import com.ms.musicmanagement.screen.artistsearch.usecase.searchforartist.SearchForArtistUseCaseImpl
-import com.ms.musicmanagement.screen.artisttopalbums.getartisttopalbums.GetArtistTopAlbumsUseCase
-import com.ms.musicmanagement.screen.artisttopalbums.getartisttopalbums.GetArtistTopAlbumsUseCaseImpl
+import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCase
+import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCaseImpl
 import org.koin.dsl.module
 
 /**

@@ -1,7 +1,5 @@
 package com.ms.musicmanagement.screen.albumdetails
 
-import android.graphics.Paint.Align
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ms.musicmanagement.R
 import com.ms.musicmanagement.screen.albumdetails.uimodel.AlbumDetailsUiModel
-import com.ms.musicmanagement.screen.artisttopalbums.uimodel.AlbumUiModel
 import com.ms.musicmanagement.shared.model.ui.ArtistUiModel
 import com.ms.musicmanagement.shared.ui.composable.CoilImage
 import com.ms.musicmanagement.shared.ui.theme.MusicManagementTheme
