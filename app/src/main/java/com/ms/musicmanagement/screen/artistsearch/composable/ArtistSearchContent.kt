@@ -19,7 +19,8 @@ fun ArtistSearchContent(
     onSearchQueryChange: (String) -> Unit,
     onPerformSearch: () -> Unit,
     artistsList: List<ArtistUiModel>?,
-    onArtistSelected: (ArtistUiModel) -> Unit
+    onArtistSelected: (ArtistUiModel) -> Unit,
+    showResultsList: Boolean
 ) {
     Column(modifier = modifier) {
         SearchField(
@@ -30,24 +31,26 @@ fun ArtistSearchContent(
             onSearchQueryChange = onSearchQueryChange,
             onPerformSearch = onPerformSearch
         )
-        if (artistsList == null) {
-            ArtistSearchHelpContent(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .weight(1f)
-            )
-        } else if (artistsList.isEmpty()) {
-            NoArtistFound(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .weight(1f)
-            )
-        } else {
-            ArtistsListContent(
-                modifier = Modifier.weight(1f),
-                artistsList = artistsList,
-                onItemSelected = onArtistSelected
-            )
+        if (showResultsList) {
+            if (artistsList == null) {
+                ArtistSearchHelpContent(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .weight(1f)
+                )
+            } else if (artistsList.isEmpty()) {
+                NoArtistFound(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .weight(1f)
+                )
+            } else {
+                ArtistsListContent(
+                    modifier = Modifier.weight(1f),
+                    artistsList = artistsList,
+                    onItemSelected = onArtistSelected
+                )
+            }
         }
     }
 }
@@ -62,7 +65,8 @@ fun ArtistsSearchContentPreview() {
             onSearchQueryChange = onQueryChanged,
             onPerformSearch = {},
             artistsList = ArtistSearchMockData.artistsList,
-            onArtistSelected = {}
+            onArtistSelected = {},
+            showResultsList = false
         )
     }
 }

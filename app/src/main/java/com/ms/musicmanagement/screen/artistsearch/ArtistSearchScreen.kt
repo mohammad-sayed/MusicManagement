@@ -29,9 +29,9 @@ fun ArtistSearchScreen(
                     softKeyboard?.hide()
                 },
                 artistsList = viewModel.artistsList.collectAsState().value,
-                onArtistSelected = viewModel::showArtistDetails
+                onArtistSelected = viewModel::showArtistDetails,
+                showResultsList = !viewModel.showLoading.collectAsState().value
             )
         }
     )
-
 }
