@@ -5,4 +5,15 @@
     <string name="artist_search_toolbar_title">Search for artist</string>
     <!--endregion-->
 
+    <!--region Errors -->
+    <string name="error_title">Error</string>
+    <string name="error_message_format">We can\'t process your request now. Please try again later\nReason: %s</string>
+    <string name="error_unknown_message">Unknown Error</string>
+    <string name="error_no_internet_connection_message">No internet connection is available. Please make sure that you enabled your device network</string>
+    <!--endregion -->
+
+    <!--region Image Description -->
+    <string name="image_description_search_icon">Search icon</string>
+    <!--endregion-->
+
 </resources>

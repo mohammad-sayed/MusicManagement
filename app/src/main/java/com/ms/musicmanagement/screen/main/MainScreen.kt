@@ -11,9 +11,11 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ms.musicmanagement.R
+import com.ms.musicmanagement.screen.artistsearch.ArtistSearchScreen
 import com.ms.musicmanagement.screen.main.composable.PrimaryTopAppBar
 import com.ms.musicmanagement.shared.model.ui.TopAppBarProperties
 import com.ms.musicmanagement.shared.navigation.AppNavDestination
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -44,7 +46,9 @@ fun MainScreen(
                 topAppBarProperties = TopAppBarProperties(
                     title = stringResource(id = R.string.artist_search_toolbar_title)
                 )
-                Text("Artist Search")
+                ArtistSearchScreen(
+                    viewModel = getViewModel()
+                )
             }
         }
     }
