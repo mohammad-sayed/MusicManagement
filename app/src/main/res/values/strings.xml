@@ -16,6 +16,10 @@
     <string name="artist_top_albums_toolbar_title_format">%s\'s Top Albums</string>
     <!--endregion-->
 
+    <!--region Album Details Screen -->
+    <string name="album_details_tracks_title">Tracks:</string>
+    <!--endregion-->
+
     <!--region Errors -->
     <string name="error_title">Error</string>
     <string name="error_message_format">We can\'t process your request now. Please try again later\nReason: %s</string>

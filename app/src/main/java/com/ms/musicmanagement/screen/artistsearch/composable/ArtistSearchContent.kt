@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ms.musicmanagement.screen.artistsearch.ArtistSearchMockData
-import com.ms.musicmanagement.screen.artistsearch.uimodel.ArtistUiModel
+import com.ms.musicmanagement.shared.model.ui.ArtistUiModel
 import com.ms.musicmanagement.shared.ui.theme.MusicManagementTheme
 
 @Composable

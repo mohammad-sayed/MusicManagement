@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.ms.musicmanagement.screen.artistsearch.mapper.ArtistSearchMapper
-import com.ms.musicmanagement.screen.artistsearch.uimodel.ArtistUiModel
+import com.ms.musicmanagement.shared.model.ui.ArtistUiModel
 import com.ms.musicmanagement.screen.artistsearch.usecase.searchforartist.SearchForArtistUseCase
 import com.ms.musicmanagement.shared.base.BaseViewModel
 import com.ms.musicmanagement.shared.base.NavControllerConsumer

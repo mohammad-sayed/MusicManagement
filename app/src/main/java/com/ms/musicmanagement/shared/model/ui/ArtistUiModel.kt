@@ -1,4 +1,4 @@
-package com.ms.musicmanagement.screen.artistsearch.uimodel
+package com.ms.musicmanagement.shared.model.ui
 
 data class ArtistUiModel(
     val id: String,

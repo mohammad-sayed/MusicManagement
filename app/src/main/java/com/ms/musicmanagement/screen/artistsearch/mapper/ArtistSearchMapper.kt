@@ -1,6 +1,6 @@
 package com.ms.musicmanagement.screen.artistsearch.mapper
 
-import com.ms.musicmanagement.screen.artistsearch.uimodel.ArtistUiModel
+import com.ms.musicmanagement.shared.model.ui.ArtistUiModel
 import com.ms.musicmanagement.shared.model.business.dto.ArtistDto
 
 object ArtistSearchMapper {
