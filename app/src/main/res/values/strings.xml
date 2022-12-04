@@ -3,6 +3,9 @@
 
     <!--region Artist Search Screen -->
     <string name="artist_search_toolbar_title">Search for artist</string>
+    <string name="artist_search_text_field_label">Search…</string>
+    <string name="artist_search_search_help_text">To find your artist, type a text in the search field above then press search button</string>
+    <string name="artist_search_no_artist_found">No result found\nPlease try again with different search text</string>
     <!--endregion-->
 
     <!--region Errors -->
@@ -14,6 +17,9 @@
 
     <!--region Image Description -->
     <string name="image_description_search_icon">Search icon</string>
+    <string name="image_description_music_artist">Music artist image</string>
+    <string name="image_description_no_search_results">No search results image</string>
+    <string name="image_description_artist_image_format">Image of artist: %s</string>
     <!--endregion-->
 
 </resources>
