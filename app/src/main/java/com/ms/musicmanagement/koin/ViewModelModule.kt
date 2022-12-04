@@ -9,9 +9,10 @@ import org.koin.dsl.module
  * This property is used to create ViewModels and inject needed parameters
  * */
 val viewModelModule = module {
-
     viewModel {
-        ArtistSearchViewModel(appContext = androidApplication())
+        ArtistSearchViewModel(
+            appContext = androidApplication(),
+            searchForArtistUseCase = get()
+        )
     }
-
 }

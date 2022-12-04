@@ -34,11 +34,15 @@ fun ArtistSearchContent(
         )
         if (artistsList == null) {
             ArtistSearchHelpContent(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .weight(1f)
             )
         } else if (artistsList.isEmpty()) {
             NoArtistFound(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .weight(1f)
             )
         } else {
             ArtistsListContent(

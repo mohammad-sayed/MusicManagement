@@ -2,7 +2,9 @@ package com.ms.musicmanagement.screen.artistsearch
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope
+import com.ms.musicmanagement.screen.artistsearch.mapper.ArtistSearchMapper
 import com.ms.musicmanagement.screen.artistsearch.uimodel.ArtistUiModel
+import com.ms.musicmanagement.screen.artistsearch.usecase.searchforartist.SearchForArtistUseCase
 import com.ms.musicmanagement.shared.base.BaseViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +13,7 @@ import kotlinx.coroutines.launch
 
 class ArtistSearchViewModel(
     appContext: Application,
+    val searchForArtistUseCase: SearchForArtistUseCase
 ) : BaseViewModel(
     appContext = appContext
 ) {
@@ -27,14 +30,10 @@ class ArtistSearchViewModel(
 
     fun performSearch() {
         viewModelScope.launch {
-            //ToDo: Use real data
-            delay(1000)
-            _artistsList.value = if (_searchQuery.value.isBlank()) {
-                emptyList()
-            } else {
-                ArtistSearchMockData.artistsList.filter { it.name.contains(_searchQuery.value) }
+            val artistsDtoList = searchForArtistUseCase(searchQuery = _searchQuery.value)
+            _artistsList.value = artistsDtoList.map {
+                ArtistSearchMapper.mapArtistDtoToArtistUiModel(it)
             }
-
         }
     }
 
