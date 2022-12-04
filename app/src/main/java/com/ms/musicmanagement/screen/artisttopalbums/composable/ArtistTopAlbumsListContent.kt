@@ -23,14 +23,14 @@ import com.ms.musicmanagement.shared.ui.theme.MusicManagementTheme
 fun ArtistTopAlbumsContent(
     modifier: Modifier = Modifier,
     albums: List<AlbumUiModel>,
-    onItemSelected: (AlbumUiModel) -> Unit
+    onAlbumSelected: (AlbumUiModel) -> Unit
 ) {
     LazyColumn(modifier = modifier) {
         albums.forEach { album ->
             item(key = album.id) {
                 AlbumItem(
                     modifier = Modifier
-                        .clickable { onItemSelected(album) }
+                        .clickable { onAlbumSelected(album) }
                         .padding(all = 16.dp),
                     album = album
                 )
@@ -73,7 +73,7 @@ private fun ArtistTopAlbumsContentPreview() {
     MusicManagementTheme {
         ArtistTopAlbumsContent(
             albums = ArtistTopAlbumsMockData.topAlbums,
-            onItemSelected = {}
+            onAlbumSelected = {}
         )
     }
 }

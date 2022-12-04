@@ -12,6 +12,10 @@
     <string name="artist_search_no_artist_found">No result found\nPlease try again with different search text</string>
     <!--endregion-->
 
+    <!--region Artist Top Albums Screen -->
+    <string name="artist_top_albums_toolbar_title_format">%s\'s Top Albums</string>
+    <!--endregion-->
+
     <!--region Errors -->
     <string name="error_title">Error</string>
     <string name="error_message_format">We can\'t process your request now. Please try again later\nReason: %s</string>

@@ -1,6 +1,8 @@
 package com.ms.musicmanagement.koin
 
+import android.os.Bundle
 import com.ms.musicmanagement.screen.artistsearch.ArtistSearchViewModel
+import com.ms.musicmanagement.screen.artisttopalbums.ArtistTopAlbumsViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -13,6 +15,12 @@ val viewModelModule = module {
         ArtistSearchViewModel(
             appContext = androidApplication(),
             searchForArtistUseCase = get()
+        )
+    }
+    viewModel { (bundle: Bundle?) ->
+        ArtistTopAlbumsViewModel(
+            appContext = androidApplication(),
+            backStackEntryBundle = bundle
         )
     }
 }
