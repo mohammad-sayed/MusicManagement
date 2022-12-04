@@ -20,7 +20,8 @@ val viewModelModule = module {
     viewModel { (bundle: Bundle?) ->
         ArtistTopAlbumsViewModel(
             appContext = androidApplication(),
-            backStackEntryBundle = bundle
+            backStackEntryBundle = bundle,
+            getArtistTopAlbumsUseCase = get()
         )
     }
 }

@@ -2,6 +2,7 @@ package com.ms.musicmanagement.shared.datasource.backend
 
 import com.ms.musicmanagement.BuildConfig
 import com.ms.musicmanagement.shared.datasource.backend.constant.LastFMApiParameters
+import com.ms.musicmanagement.shared.model.backend.getartisttopalbums.GetTopAlbumsResponse
 import com.ms.musicmanagement.shared.model.backend.searchforartist.SearchForArtistResponse
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -15,6 +16,11 @@ class LastFMBackendDataSourceImpl : BaseBackendDataSource(
 
     override suspend fun searchForArtist(searchQuery: String): SearchForArtistResponse {
         val response = lastFMRetrofitService.searchForArtist(searchQuery = searchQuery)
+        return handleResponse(response)
+    }
+
+    override suspend fun getArtistTopAlbums(artistName: String): GetTopAlbumsResponse {
+        val response = lastFMRetrofitService.getArtistTopAlbums(artistName = artistName)
         return handleResponse(response)
     }
 

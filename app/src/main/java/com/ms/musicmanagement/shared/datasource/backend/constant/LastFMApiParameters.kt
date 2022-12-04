@@ -16,6 +16,7 @@ object LastFMApiParameters {
         object Artist {
             private const val packageName = "artist"
             const val METHOD_SEARCH = "$packageName.search"
+            const val METHOD_GET_TOP_ALBUMS = "$packageName.getTopAlbums"
         }
     }
 }

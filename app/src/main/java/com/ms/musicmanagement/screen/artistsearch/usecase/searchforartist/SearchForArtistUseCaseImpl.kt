@@ -16,7 +16,7 @@ class SearchForArtistUseCaseImpl(
                 ArtistDto(
                     id = artist.name,
                     name = artist.name,
-                    imageUrl = artist.imageResolutions.firstOrNull { it.size == ImageSize.MEDIUM }?.url
+                    imageUrl = artist.imageResolutions?.firstOrNull { it.size == ImageSize.MEDIUM }?.url
                 )
             }
         }
