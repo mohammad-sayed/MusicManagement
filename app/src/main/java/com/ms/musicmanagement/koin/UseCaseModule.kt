@@ -10,6 +10,10 @@ import org.koin.dsl.module
 val useCaseModule = module {
 
     //region Artist Search
-    factory<SearchForArtistUseCase> { SearchForArtistUseCaseImpl() }
+    factory<SearchForArtistUseCase> {
+        SearchForArtistUseCaseImpl(
+            lastFMRepository = get()
+        )
+    }
     //endregion
 }

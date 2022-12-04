@@ -2,18 +2,20 @@ package com.ms.musicmanagement.shared.datasource.backend.constant
 
 object LastFMApiParameters {
 
-    const val API_KEY = "api_key"
 
-    object Format {
-        const val KEY = "format"
-        const val VALUE_JSON = "json"
+    object Key {
+        const val API_KEY = "api_key"
+        const val METHOD = "method"
+        const val FORMAT = "format"
+        const val ARTIST = "artist"
     }
 
-    object Artist {
-        private const val packageName = "artist"
+    object Value {
+        const val FORMAT_JSON = "json"
 
-        object Search {
-            const val METHOD = "$packageName.search"
+        object Artist {
+            private const val packageName = "artist"
+            const val METHOD_SEARCH = "$packageName.search"
         }
     }
 }

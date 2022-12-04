@@ -30,9 +30,13 @@ class ArtistSearchViewModel(
 
     fun performSearch() {
         viewModelScope.launch {
-            val artistsDtoList = searchForArtistUseCase(searchQuery = _searchQuery.value)
-            _artistsList.value = artistsDtoList.map {
-                ArtistSearchMapper.mapArtistDtoToArtistUiModel(it)
+            try {
+                val artistsDtoList = searchForArtistUseCase(searchQuery = _searchQuery.value)
+                _artistsList.value = artistsDtoList.map {
+                    ArtistSearchMapper.mapArtistDtoToArtistUiModel(it)
+                }
+            } catch (ex: Exception) {
+                handleException(ex)
             }
         }
     }

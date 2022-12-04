@@ -3,7 +3,8 @@ package com.ms.musicmanagement.shared.base
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import com.ms.musicmanagement.R
-import com.ms.musicmanagement.shared.model.backend.exception.ServerErrorException
+import com.ms.musicmanagement.shared.model.backend.exception.BackendBusinessException
+import com.ms.musicmanagement.shared.model.backend.exception.ServerBackendException
 import com.ms.musicmanagement.shared.model.ui.BusinessErrorUiModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -37,8 +38,20 @@ open class BaseViewModel(
             is UnknownHostException -> {
                 message = appContext.getString(R.string.error_no_internet_connection_message)
             }
-            is ServerErrorException -> {
+            is ServerBackendException -> {
                 message = appContext.getString(R.string.error_message_server)
+            }
+            is BackendBusinessException -> {
+                val exceptionMessage = if (exception.message.isNullOrEmpty()) {
+                    appContext.getString(R.string.error_message_unknown)
+                } else {
+                    exception.message
+                }
+                message = appContext.getString(
+                    R.string.error_message_format_status_code_and_message,
+                    exception.backendBusinessErrorCode,
+                    exceptionMessage,
+                )
             }
             else -> {
                 val exceptionMessage = if (exception.message.isNullOrEmpty()) {
@@ -48,7 +61,7 @@ open class BaseViewModel(
                 }
                 message = appContext.getString(
                     R.string.error_message_format,
-                    exceptionMessage
+                    exceptionMessage,
                 )
             }
         }

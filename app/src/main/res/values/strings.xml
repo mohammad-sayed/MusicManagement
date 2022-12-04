@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">MusicManagement</string>
 
+    <!--region Common -->
+    <string name="ok">OK</string>
+    <!--endregion-->
+
     <!--region Artist Search Screen -->
     <string name="artist_search_toolbar_title">Search for artist</string>
     <string name="artist_search_text_field_label">Search…</string>
@@ -11,6 +15,7 @@
     <!--region Errors -->
     <string name="error_title">Error</string>
     <string name="error_message_format">We can\'t process your request now. Please try again later\nReason: %s</string>
+    <string name="error_message_format_status_code_and_message">We can\'t process your request now. Please try again later\nReason: StatusCode: %s\nMessage: %s</string>
     <string name="error_message_unknown">Unknown Error</string>
     <string name="error_message_server">Server Error</string>
     <string name="error_no_internet_connection_message">No internet connection is available. Please make sure that you enabled your device network</string>

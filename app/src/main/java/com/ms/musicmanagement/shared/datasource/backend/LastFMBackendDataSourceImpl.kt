@@ -2,16 +2,21 @@ package com.ms.musicmanagement.shared.datasource.backend
 
 import com.ms.musicmanagement.BuildConfig
 import com.ms.musicmanagement.shared.datasource.backend.constant.LastFMApiParameters
+import com.ms.musicmanagement.shared.model.backend.searchforartist.SearchForArtistResponse
 import okhttp3.Interceptor
-import okhttp3.Request
 import okhttp3.Response
 
 class LastFMBackendDataSourceImpl : BaseBackendDataSource(
-    url = BuildConfig.BASE_URL,
+    baseUrl = BuildConfig.BASE_URL,
     interceptor = LastFMHttpRequestInterceptor()
 ), LastFMBackendDataSource {
 
     private val lastFMRetrofitService = retrofit.create(LastFMRetrofitService::class.java)
+
+    override suspend fun searchForArtist(searchQuery: String): SearchForArtistResponse {
+        val response = lastFMRetrofitService.searchForArtist(searchQuery = searchQuery)
+        return handleResponse(response)
+    }
 
     private class LastFMHttpRequestInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
@@ -19,10 +24,10 @@ class LastFMBackendDataSourceImpl : BaseBackendDataSource(
             val originalHttpUrl = original.url
 
             val url = originalHttpUrl.newBuilder()
-                .addQueryParameter(LastFMApiParameters.API_KEY, BuildConfig.LAST_FM_API_KEY)
+                .addQueryParameter(LastFMApiParameters.Key.API_KEY, BuildConfig.LAST_FM_API_KEY)
                 .addQueryParameter(
-                    LastFMApiParameters.Format.KEY,
-                    LastFMApiParameters.Format.VALUE_JSON
+                    LastFMApiParameters.Key.FORMAT,
+                    LastFMApiParameters.Value.FORMAT_JSON
                 )
                 .build()
 
@@ -32,7 +37,6 @@ class LastFMBackendDataSourceImpl : BaseBackendDataSource(
             val request = requestBuilder.build()
             return chain.proceed(request)
         }
-
     }
 
 }
