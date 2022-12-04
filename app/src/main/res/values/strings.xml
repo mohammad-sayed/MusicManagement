@@ -11,7 +11,8 @@
     <!--region Errors -->
     <string name="error_title">Error</string>
     <string name="error_message_format">We can\'t process your request now. Please try again later\nReason: %s</string>
-    <string name="error_unknown_message">Unknown Error</string>
+    <string name="error_message_unknown">Unknown Error</string>
+    <string name="error_message_server">Server Error</string>
     <string name="error_no_internet_connection_message">No internet connection is available. Please make sure that you enabled your device network</string>
     <!--endregion -->
 
