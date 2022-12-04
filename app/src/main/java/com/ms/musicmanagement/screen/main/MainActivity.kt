@@ -1,4 +1,4 @@
-package com.ms.musicmanagement.screen
+package com.ms.musicmanagement.screen.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,12 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MusicManagementTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+                MainScreen()
             }
         }
     }

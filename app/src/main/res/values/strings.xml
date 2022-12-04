@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MusicManagement</string>
+
+    <!--region Artist Search Screen -->
+    <string name="artist_search_toolbar_title">Search for artist</string>
+    <!--endregion-->
+
 </resources>
