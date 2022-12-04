@@ -26,6 +26,7 @@
     <string name="image_description_music_artist">Music artist image</string>
     <string name="image_description_no_search_results">No search results image</string>
     <string name="image_description_artist_image_format">Image of artist: %s</string>
+    <string name="image_description_album_image_format">Image of album: %s</string>
     <!--endregion-->
 
 </resources>
