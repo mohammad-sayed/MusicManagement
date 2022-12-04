@@ -1,4 +1,4 @@
-package com.ms.musicmanagement
+package com.ms.musicmanagement.screen
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
