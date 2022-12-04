@@ -5,4 +5,6 @@ data class AlbumDto(
     val name: String,
     val mediumImageUrl: String?,
     val largeImageUrl: String?,
+    val artistDto: ArtistDto? = null,
+    val tracks: List<String>? = null
 )

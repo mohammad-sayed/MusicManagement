@@ -1,5 +1,7 @@
 package com.ms.musicmanagement.koin
 
+import com.ms.musicmanagement.screen.albumdetails.usecase.GetAlbumInfoUseCase
+import com.ms.musicmanagement.screen.albumdetails.usecase.GetAlbumInfoUseCaseImpl
 import com.ms.musicmanagement.screen.artistsearch.usecase.searchforartist.SearchForArtistUseCase
 import com.ms.musicmanagement.screen.artistsearch.usecase.searchforartist.SearchForArtistUseCaseImpl
 import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCase
@@ -21,6 +23,14 @@ val useCaseModule = module {
     //region Artist Top Albums
     factory<GetArtistTopAlbumsUseCase> {
         GetArtistTopAlbumsUseCaseImpl(
+            lastFMRepository = get()
+        )
+    }
+    //endregion
+
+    //region Artist Top Albums
+    factory<GetAlbumInfoUseCase> {
+        GetAlbumInfoUseCaseImpl(
             lastFMRepository = get()
         )
     }

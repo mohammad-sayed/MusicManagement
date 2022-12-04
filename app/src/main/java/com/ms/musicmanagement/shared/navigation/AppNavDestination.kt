@@ -18,4 +18,6 @@ object AppNavDestination {
     }
 
     val ArtistTopAlbums = ArtistTopAlbumsNavComposableDestination
+
+    val AlbumDetails = AlbumDetailsNavComposableDestination
 }

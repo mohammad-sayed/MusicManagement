@@ -16,4 +16,12 @@ class LastFMRepositoryImpl(
     override suspend fun getArtistTopAlbums(artistName: String) = withContext(Dispatchers.IO) {
         return@withContext lastFMBackendDataSource.getArtistTopAlbums(artistName = artistName)
     }
+
+    override suspend fun getAlbumInfo(artistName: String, albumName: String) =
+        withContext(Dispatchers.IO) {
+            return@withContext lastFMBackendDataSource.getAlbumInfo(
+                artistName = artistName,
+                albumName = albumName
+            )
+        }
 }

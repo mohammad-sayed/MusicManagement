@@ -3,10 +3,12 @@ package com.ms.musicmanagement.screen.artisttopalbums
 import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCase
 import com.ms.musicmanagement.screen.artisttopalbums.mapper.ArtistTopAlbumsMapper
 import com.ms.musicmanagement.screen.artisttopalbums.uimodel.AlbumUiModel
 import com.ms.musicmanagement.shared.base.BaseViewModel
+import com.ms.musicmanagement.shared.base.NavControllerConsumer
 import com.ms.musicmanagement.shared.navigation.AppNavDestination
 import com.ms.musicmanagement.shared.navigation.ArtistTopAlbumsNavComposableDestination
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +21,7 @@ class ArtistTopAlbumsViewModel(
     private val getArtistTopAlbumsUseCase: GetArtistTopAlbumsUseCase
 ) : BaseViewModel(
     appContext = appContext
-) {
+), NavControllerConsumer {
     private val arguments: ArtistTopAlbumsNavComposableDestination.ArtistTopAlbumsArguments
     val artistName: String
 
@@ -33,12 +35,25 @@ class ArtistTopAlbumsViewModel(
     private val _topAlbums: MutableStateFlow<List<AlbumUiModel>> = MutableStateFlow(emptyList())
     val topAlbums = _topAlbums.asStateFlow()
 
+    private var navController: NavController? = null
     //region Public methods
 
 
     fun showAlbumDetails(albumUiModel: AlbumUiModel) {
-        //ToDo: Navigate to artist details screen
+        navController?.navigate(
+            route = AppNavDestination.AlbumDetails.getNavigationRoute(
+                artistName = artistName,
+                albumName = albumUiModel.name
+            )
+        )
     }
+
+    //region NavControllerConsumer implementation
+    override fun updateNavController(navController: NavController) {
+        this.navController = navController
+    }
+    //endregion
+
     //endregion
 
     //region Private methods

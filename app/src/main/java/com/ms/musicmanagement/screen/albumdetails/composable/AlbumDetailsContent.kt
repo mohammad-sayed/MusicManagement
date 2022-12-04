@@ -1,4 +1,4 @@
-package com.ms.musicmanagement.screen.albumdetails
+package com.ms.musicmanagement.screen.albumdetails.composable
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ms.musicmanagement.R
+import com.ms.musicmanagement.screen.albumdetails.AlbumDetailsMockData
 import com.ms.musicmanagement.screen.albumdetails.uimodel.AlbumDetailsUiModel
 import com.ms.musicmanagement.shared.model.ui.ArtistUiModel
 import com.ms.musicmanagement.shared.ui.composable.CoilImage
@@ -21,37 +22,39 @@ import com.ms.musicmanagement.shared.ui.theme.MusicManagementTheme
 @Composable
 fun AlbumsDetailsContent(
     modifier: Modifier = Modifier,
-    album: AlbumDetailsUiModel
+    album: AlbumDetailsUiModel?
 ) {
     LazyColumn(modifier = modifier) {
         item {
-            AlbumImage(album = album)
+            AlbumImage(album = album ?: return@item)
         }
         item {
             Text(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .padding(horizontal = 16.dp),
-                text = album.name,
+                text = album?.name ?: return@item,
                 style = MaterialTheme.typography.h4,
             )
         }
-        item {
-            ArtistInfo(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                artist = album.artist
-            )
+        album?.artist?.let { artist ->
+            item {
+                ArtistInfo(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    artist = artist
+                )
+            }
         }
         item {
             Text(
                 modifier = Modifier
-                    .padding(top = 16.dp)
+                    .padding(top = 24.dp)
                     .padding(horizontal = 16.dp),
                 text = stringResource(id = R.string.album_details_tracks_title),
                 style = MaterialTheme.typography.h6,
             )
         }
-        album.tracks.forEach { track ->
+        album?.tracks?.forEach { track ->
             item(key = track) {
                 TrackItem(
                     modifier = Modifier
@@ -92,16 +95,19 @@ private fun ArtistInfo(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        CoilImage(
-            modifier = Modifier.size(40.dp),
-            imageUrl = artist.imageUrl,
-            contentDescription = stringResource(
-                id = R.string.image_description_album_image_format,
-                artist.name
+        if (artist.imageUrl != null) {
+            CoilImage(
+                modifier = Modifier
+                    .size(40.dp)
+                    .padding(end = 16.dp),
+                imageUrl = artist.imageUrl,
+                contentDescription = stringResource(
+                    id = R.string.image_description_album_image_format,
+                    artist.name
+                )
             )
-        )
+        }
         Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
             text = artist.name,
             style = MaterialTheme.typography.subtitle1,
         )

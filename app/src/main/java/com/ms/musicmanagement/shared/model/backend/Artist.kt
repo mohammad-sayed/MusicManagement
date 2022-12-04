@@ -1,4 +1,4 @@
-package com.ms.musicmanagement.shared.model.backend.searchforartist
+package com.ms.musicmanagement.shared.model.backend
 
 import com.google.gson.annotations.SerializedName
 import com.ms.musicmanagement.shared.model.backend.Image

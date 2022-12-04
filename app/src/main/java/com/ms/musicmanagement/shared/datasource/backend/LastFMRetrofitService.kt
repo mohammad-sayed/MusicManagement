@@ -1,6 +1,7 @@
 package com.ms.musicmanagement.shared.datasource.backend
 
 import com.ms.musicmanagement.shared.datasource.backend.constant.LastFMApiParameters
+import com.ms.musicmanagement.shared.model.backend.getalbuminfo.GetAlbumInfoResponse
 import com.ms.musicmanagement.shared.model.backend.getartisttopalbums.GetTopAlbumsResponse
 import com.ms.musicmanagement.shared.model.backend.searchforartist.SearchForArtistResponse
 import retrofit2.Response
@@ -20,4 +21,12 @@ interface LastFMRetrofitService {
         @Query(value = LastFMApiParameters.Key.ARTIST)
         artistName: String,
     ): Response<GetTopAlbumsResponse>
+
+    @GET("?${LastFMApiParameters.Key.METHOD}=${LastFMApiParameters.Value.Album.METHOD_GET_INFO}")
+    suspend fun getAlbumInfo(
+        @Query(value = LastFMApiParameters.Key.ARTIST)
+        artistName: String,
+        @Query(value = LastFMApiParameters.Key.ALBUM)
+        albumName: String
+    ): Response<GetAlbumInfoResponse>
 }

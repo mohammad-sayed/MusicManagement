@@ -11,6 +11,8 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.ms.musicmanagement.R
+import com.ms.musicmanagement.screen.albumdetails.AlbumDetailsScreen
+import com.ms.musicmanagement.screen.albumdetails.AlbumDetailsViewModel
 import com.ms.musicmanagement.screen.artistsearch.ArtistSearchScreen
 import com.ms.musicmanagement.screen.artistsearch.ArtistSearchViewModel
 import com.ms.musicmanagement.screen.artisttopalbums.ArtistTopAlbumsScreen
@@ -60,9 +62,10 @@ fun MainScreen(
                 route = AppNavDestination.ArtistTopAlbums.navComposableDestination,
                 arguments = AppNavDestination.ArtistTopAlbums.getArguments()
             ) { backStackEntry ->
-                val viewModel = getViewModel<ArtistTopAlbumsViewModel>{
+                val viewModel = getViewModel<ArtistTopAlbumsViewModel> {
                     parametersOf(backStackEntry.arguments)
                 }
+                viewModel.updateNavController(navController = mainNavController)
                 topAppBarProperties = TopAppBarProperties(
                     title = stringResource(
                         id = R.string.artist_top_albums_toolbar_title_format,
@@ -70,6 +73,20 @@ fun MainScreen(
                     )
                 )
                 ArtistTopAlbumsScreen(
+                    viewModel = viewModel
+                )
+            }
+            composable(
+                route = AppNavDestination.AlbumDetails.navComposableDestination,
+                arguments = AppNavDestination.AlbumDetails.getArguments()
+            ) { backStackEntry ->
+                val viewModel = getViewModel<AlbumDetailsViewModel> {
+                    parametersOf(backStackEntry.arguments)
+                }
+                topAppBarProperties = TopAppBarProperties(
+                    title = viewModel.albumName
+                )
+                AlbumDetailsScreen(
                     viewModel = viewModel
                 )
             }
