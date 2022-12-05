@@ -9,7 +9,7 @@ data class Artist(
     @SerializedName("listeners")
     val listeners: String? = null,
     @SerializedName("mbid")
-    val mbid: String,
+    val mbid: String? = null,
     @SerializedName("name")
     val name: String,
     @SerializedName("streamable")

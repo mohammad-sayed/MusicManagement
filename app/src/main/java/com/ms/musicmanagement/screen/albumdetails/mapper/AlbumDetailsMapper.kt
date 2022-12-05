@@ -10,6 +10,7 @@ object AlbumDetailsMapper {
         return AlbumDetailsUiModel(
             id = albumDto.id,
             name = albumDto.name,
+            mbid = albumDto.mbid,
             largeImageUrl = albumDto.largeImageUrl,
             tracks = albumDto.tracks ?: emptyList(),
             artist = ArtistUiModel(

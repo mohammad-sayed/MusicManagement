@@ -8,6 +8,7 @@ object ArtistTopAlbumsMapper {
         return AlbumUiModel(
             id = albumDto.id,
             name = albumDto.name,
+            mbid = albumDto.mbid,
             mediumImageUrl = albumDto.mediumImageUrl,
             largeImageUrl = albumDto.largeImageUrl,
             isFavorite = albumDto.isFavorite

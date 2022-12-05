@@ -4,13 +4,16 @@ import android.app.Application
 import android.os.Bundle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.ms.musicmanagement.screen.albumdetails.mapper.AlbumDetailsMapper
 import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCase
 import com.ms.musicmanagement.screen.artisttopalbums.mapper.ArtistTopAlbumsMapper
 import com.ms.musicmanagement.screen.artisttopalbums.uimodel.AlbumUiModel
 import com.ms.musicmanagement.shared.base.BaseViewModel
 import com.ms.musicmanagement.shared.base.NavControllerConsumer
+import com.ms.musicmanagement.shared.model.business.dto.AlbumDto
 import com.ms.musicmanagement.shared.navigation.AppNavDestination
 import com.ms.musicmanagement.shared.navigation.ArtistTopAlbumsNavComposableDestination
+import com.ms.musicmanagement.shared.usecase.cachealbum.CacheAlbumUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +23,8 @@ import kotlinx.coroutines.launch
 class ArtistTopAlbumsViewModel(
     appContext: Application,
     backStackEntryBundle: Bundle?,
-    private val getArtistTopAlbumsUseCase: GetArtistTopAlbumsUseCase
+    private val getArtistTopAlbumsUseCase: GetArtistTopAlbumsUseCase,
+    private val cacheAlbumUseCase: CacheAlbumUseCase
 ) : BaseViewModel(
     appContext = appContext
 ), NavControllerConsumer {
@@ -38,6 +42,7 @@ class ArtistTopAlbumsViewModel(
     val topAlbums: StateFlow<List<AlbumUiModel>> = _topAlbums.asStateFlow()
 
     private var navController: NavController? = null
+    private var albumDtoList: List<AlbumDto> = emptyList()
     //region Public methods
 
 
@@ -51,13 +56,19 @@ class ArtistTopAlbumsViewModel(
     }
 
     fun toggleIsFavorite(albumUiModel: AlbumUiModel) {
-        val albumIndex = _topAlbums.value.indexOfFirst { it.name == albumUiModel.name }
-        if (albumIndex > -1) {
-            val mutableList = _topAlbums.value.toMutableList()
-            _topAlbums.update {
-                val item = it[albumIndex]
-                mutableList[albumIndex] = item.copy(isFavorite = !item.isFavorite)
-                mutableList
+        viewModelScope.launch {
+            val albumIndex = _topAlbums.value.indexOfFirst { it.name == albumUiModel.name }
+            if (albumIndex > -1) {
+                val item = _topAlbums.value[albumIndex]
+                val newIsFavorite = !item.isFavorite
+                val isUpdated = cacheAlbum(albumIndex)
+                if (isUpdated) {
+                    val mutableList = _topAlbums.value.toMutableList()
+                    _topAlbums.update {
+                        mutableList[albumIndex] = item.copy(isFavorite = !item.isFavorite)
+                        mutableList
+                    }
+                }
             }
         }
     }
@@ -75,8 +86,8 @@ class ArtistTopAlbumsViewModel(
         viewModelScope.launch {
             try {
                 _showLoading.value = true
-                val albumsDtoList = getArtistTopAlbumsUseCase.invoke(artistName = artistName)
-                _topAlbums.value = albumsDtoList.map {
+                albumDtoList = getArtistTopAlbumsUseCase.invoke(artistName = artistName)
+                _topAlbums.value = albumDtoList.map {
                     ArtistTopAlbumsMapper.mapAlbumDtoToAlbumUiModel(it)
                 }
             } catch (ex: Exception) {
@@ -84,6 +95,15 @@ class ArtistTopAlbumsViewModel(
             } finally {
                 _showLoading.value = false
             }
+        }
+    }
+
+    private suspend fun cacheAlbum(albumIndex: Int): Boolean {
+        return try {
+            cacheAlbumUseCase.invoke(albumDtoList[albumIndex])
+            true
+        } catch (ex: Exception) {
+            false
         }
     }
     //endregion

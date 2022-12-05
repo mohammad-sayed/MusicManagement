@@ -10,7 +10,7 @@ data class Album(
     @SerializedName("image")
     val imageResolutions: List<Image>,
     @SerializedName("mbid")
-    val mbid: String,
+    val mbid: String? = null,
     @SerializedName("name")
     val name: String,
     @SerializedName("playcount")

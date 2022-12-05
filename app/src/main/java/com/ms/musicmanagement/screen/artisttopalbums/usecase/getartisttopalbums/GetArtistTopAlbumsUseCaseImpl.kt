@@ -20,6 +20,7 @@ class GetArtistTopAlbumsUseCaseImpl(
                 AlbumDto(
                     id = album.name,
                     name = album.name,
+                    mbid = album.mbid,
                     mediumImageUrl = album.imageResolutions.firstOrNull { it.size == ImageSize.MEDIUM }?.url,
                     largeImageUrl = album.imageResolutions.firstOrNull { it.size == ImageSize.LARGE }?.url,
                     isFavorite = cachedAlbums.firstOrNull { cachedAlbum -> cachedAlbum.name == album.name } != null

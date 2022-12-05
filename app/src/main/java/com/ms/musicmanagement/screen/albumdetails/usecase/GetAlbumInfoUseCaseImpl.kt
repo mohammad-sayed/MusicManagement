@@ -19,6 +19,7 @@ class GetAlbumInfoUseCaseImpl(
         return AlbumDto(
             id = response.album.name,
             name = response.album.name,
+            mbid = response.album.mbid,
             mediumImageUrl = response.album.imageResolutions.firstOrNull { it.size == ImageSize.MEDIUM }?.url,
             largeImageUrl = response.album.imageResolutions.firstOrNull { it.size == ImageSize.LARGE }?.url,
             tracks = response.album.tracks.tracksList.map { it.name },
