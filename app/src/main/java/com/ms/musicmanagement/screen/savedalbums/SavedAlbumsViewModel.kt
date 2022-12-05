@@ -18,9 +18,7 @@ import kotlinx.coroutines.launch
 
 class SavedAlbumsViewModel(
     appContext: Application,
-    private val getArtistTopAlbumsUseCase: GetArtistTopAlbumsUseCase,
     private val getCachedAlbumsUseCase: GetCachedAlbumsUseCase,
-    private val cacheAlbumUseCase: CacheAlbumUseCase,
     private val deleteAlbumUseCase: DeleteAlbumUseCase
 ) : BaseViewModel(
     appContext = appContext
@@ -33,10 +31,8 @@ class SavedAlbumsViewModel(
     val albums = _albums.asStateFlow()
 
     private var navController: NavController? = null
-    private var albumDtoList: List<AlbumDto> = emptyList()
+
     //region Public methods
-
-
     fun showAlbumDetails(albumUiModel: AlbumUiModel) {
         navController?.navigate(
             route = AppNavDestination.AlbumDetails.getNavigationRoute(
@@ -52,20 +48,15 @@ class SavedAlbumsViewModel(
             if (albumIndex > -1) {
                 val item = _albums.value[albumIndex]
                 val newIsFavorite = !item.isFavorite
-                val isUpdated = if (newIsFavorite) {
-                    cacheAlbum(albumIndex)
-                } else {
+                if (!newIsFavorite) {
                     deleteAlbum(albumUiModel.name)
-                }
-                if (isUpdated) {
-                    val mutableList = _albums.value.toMutableList()
-                    _albums.update {
-                        mutableList[albumIndex] = item.copy(isFavorite = newIsFavorite)
-                        mutableList
-                    }
                 }
             }
         }
+    }
+
+    fun showSearchScreen() {
+        navController?.navigate(AppNavDestination.ArtistSearch.getNavigationRoute())
     }
 
     //region NavControllerConsumer implementation
@@ -84,15 +75,6 @@ class SavedAlbumsViewModel(
                     ArtistTopAlbumsMapper.mapAlbumDtoToAlbumUiModel(albumDto)
                 }
             }
-        }
-    }
-
-    private suspend fun cacheAlbum(albumIndex: Int): Boolean {
-        return try {
-            cacheAlbumUseCase(albumDtoList[albumIndex])
-            true
-        } catch (ex: Exception) {
-            false
         }
     }
 

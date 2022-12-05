@@ -1,8 +1,12 @@
 <resources>
-    <string name="app_name">MusicManagement</string>
+    <string name="app_name">Music Manager</string>
 
     <!--region Common -->
     <string name="ok">OK</string>
+    <!--endregion-->
+
+    <!--region Artist Search Screen -->
+    <string name="saved_albums_help_text">No albums added as favorite\Search for an artist, then look for albums. And once you pick your favorite album, you will find it here</string>
     <!--endregion-->
 
     <!--region Artist Search Screen -->
@@ -35,6 +39,8 @@
     <string name="image_description_no_search_results">No search results image</string>
     <string name="image_description_artist_image_format">Image of artist: %s</string>
     <string name="image_description_album_image_format">Image of album: %s</string>
+    <string name="image_description_disk_image">Disk Image</string>
+    <string name="image_description_back_icon">Back icon</string>
     <!--endregion-->
 
 </resources>

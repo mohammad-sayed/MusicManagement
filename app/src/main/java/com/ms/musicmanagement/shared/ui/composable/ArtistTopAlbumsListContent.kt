@@ -80,7 +80,7 @@ private fun AlbumItem(
 }
 
 @Composable
-private fun FavoriteIconButton(
+fun FavoriteIconButton(
     modifier: Modifier = Modifier,
     isFavorite: Boolean,
     onClick: () -> Unit

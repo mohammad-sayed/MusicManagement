@@ -2,7 +2,7 @@ package com.ms.musicmanagement.screen.savedalbums
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import com.ms.musicmanagement.shared.base.BaseViewModel
+import com.ms.musicmanagement.screen.savedalbums.composable.SavedAlbumsContent
 import com.ms.musicmanagement.shared.ui.composable.AlbumsListContent
 import com.ms.musicmanagement.shared.ui.composable.BaseScreen
 
@@ -13,7 +13,7 @@ fun SavedAlbumsScreen(
     BaseScreen(
         viewModel = viewModel,
         content = {
-            AlbumsListContent(
+            SavedAlbumsContent(
                 albums = viewModel.albums.collectAsState().value,
                 onAlbumSelected = viewModel::showAlbumDetails,
                 onToggleIsFavorite = viewModel::toggleIsFavorite

@@ -18,8 +18,12 @@ import com.ms.musicmanagement.screen.artistsearch.ArtistSearchViewModel
 import com.ms.musicmanagement.screen.artisttopalbums.ArtistTopAlbumsScreen
 import com.ms.musicmanagement.screen.artisttopalbums.ArtistTopAlbumsViewModel
 import com.ms.musicmanagement.screen.main.composable.PrimaryTopAppBar
+import com.ms.musicmanagement.screen.savedalbums.SavedAlbumsScreen
+import com.ms.musicmanagement.screen.savedalbums.SavedAlbumsViewModel
 import com.ms.musicmanagement.shared.model.ui.TopAppBarProperties
 import com.ms.musicmanagement.shared.navigation.AppNavDestination
+import com.ms.musicmanagement.shared.ui.composable.iconbutton.BackIconButton
+import com.ms.musicmanagement.shared.ui.composable.iconbutton.SearchIconButton
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -44,15 +48,37 @@ fun MainScreen(
     }) {
         AnimatedNavHost(
             navController = mainNavController,
-            startDestination = AppNavDestination.ArtistSearch.navComposableDestination
+            startDestination = AppNavDestination.SavedAlbums.navComposableDestination
         ) {
+            composable(
+                route = AppNavDestination.SavedAlbums.navComposableDestination
+            ) {
+                val viewModel = getViewModel<SavedAlbumsViewModel>()
+                viewModel.updateNavController(navController = mainNavController)
+                topAppBarProperties = TopAppBarProperties(
+                    title = stringResource(id = R.string.app_name),
+                    actions = {
+                        SearchIconButton(
+                            onClick = { viewModel.showSearchScreen() }
+                        )
+                    }
+                )
+                SavedAlbumsScreen(
+                    viewModel = viewModel
+                )
+            }
             composable(
                 route = AppNavDestination.ArtistSearch.navComposableDestination
             ) {
                 val viewModel = getViewModel<ArtistSearchViewModel>()
                 viewModel.updateNavController(navController = mainNavController)
                 topAppBarProperties = TopAppBarProperties(
-                    title = stringResource(id = R.string.artist_search_toolbar_title)
+                    title = stringResource(id = R.string.artist_search_toolbar_title),
+                    navigationIcon = {
+                        BackIconButton(
+                            onClick = { mainNavController.popBackStack() }
+                        )
+                    }
                 )
                 ArtistSearchScreen(
                     viewModel = viewModel
@@ -70,7 +96,12 @@ fun MainScreen(
                     title = stringResource(
                         id = R.string.artist_top_albums_toolbar_title_format,
                         viewModel.artistName
-                    )
+                    ),
+                    navigationIcon = {
+                        BackIconButton(
+                            onClick = { mainNavController.popBackStack() }
+                        )
+                    }
                 )
                 ArtistTopAlbumsScreen(
                     viewModel = viewModel
@@ -84,7 +115,12 @@ fun MainScreen(
                     parametersOf(backStackEntry.arguments)
                 }
                 topAppBarProperties = TopAppBarProperties(
-                    title = viewModel.albumName
+                    title = viewModel.albumName,
+                    navigationIcon = {
+                        BackIconButton(
+                            onClick = { mainNavController.popBackStack() }
+                        )
+                    }
                 )
                 AlbumDetailsScreen(
                     viewModel = viewModel
