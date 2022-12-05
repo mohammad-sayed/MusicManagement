@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface CacheRepository {
     suspend fun getAlbumsFlow(): Flow<List<Album>>
     suspend fun getAlbums(): List<Album>
+    suspend fun getAlbumById(albumName: String): Album
     suspend fun addAlbum(album: Album)
     suspend fun deleteAlbum(albumName: String)
 }

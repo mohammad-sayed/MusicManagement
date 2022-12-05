@@ -1,4 +1,4 @@
-package com.ms.musicmanagement.screen.albumdetails.usecase
+package com.ms.musicmanagement.screen.albumdetails.usecase.getalbuminfo
 
 import com.ms.musicmanagement.shared.model.business.dto.AlbumDto
 

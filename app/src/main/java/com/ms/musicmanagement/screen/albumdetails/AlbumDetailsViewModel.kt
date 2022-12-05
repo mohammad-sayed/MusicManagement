@@ -5,18 +5,22 @@ import android.os.Bundle
 import androidx.lifecycle.viewModelScope
 import com.ms.musicmanagement.screen.albumdetails.mapper.AlbumDetailsMapper
 import com.ms.musicmanagement.screen.albumdetails.uimodel.AlbumDetailsUiModel
-import com.ms.musicmanagement.screen.albumdetails.usecase.GetAlbumInfoUseCase
+import com.ms.musicmanagement.screen.albumdetails.usecase.getalbuminfo.GetAlbumInfoUseCase
+import com.ms.musicmanagement.screen.albumdetails.usecase.getcachedalbum.GetCachedAlbumUseCase
 import com.ms.musicmanagement.shared.base.BaseViewModel
+import com.ms.musicmanagement.shared.model.business.dto.AlbumDto
 import com.ms.musicmanagement.shared.navigation.AlbumDetailsNavComposableDestination
 import com.ms.musicmanagement.shared.navigation.AppNavDestination
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.net.UnknownHostException
 
 class AlbumDetailsViewModel(
     appContext: Application,
     backStackEntryBundle: Bundle?,
-    private val getAlbumInfoUseCase: GetAlbumInfoUseCase
+    private val getAlbumInfoUseCase: GetAlbumInfoUseCase,
+    private val getCachedAlbumUseCase: GetCachedAlbumUseCase
 ) : BaseViewModel(
     appContext = appContext
 ) {
@@ -25,7 +29,7 @@ class AlbumDetailsViewModel(
 
     init {
         arguments = AppNavDestination.AlbumDetails.parseArguments(backStackEntryBundle)
-        getTopAlbums()
+        getAlbumInfo()
     }
 
 
@@ -38,7 +42,7 @@ class AlbumDetailsViewModel(
     //endregion
 
     //region Private methods
-    private fun getTopAlbums() {
+    private fun getAlbumInfo() {
         viewModelScope.launch {
             try {
                 _showLoading.value = true
@@ -49,11 +53,23 @@ class AlbumDetailsViewModel(
                     )
                     _album.value = AlbumDetailsMapper.mapAlbumDtoToAlbumUiModel(albumDto)
                 }
+            } catch (ex: UnknownHostException) {
+                //Internet connection error
+                getCachedAlbum()
             } catch (ex: Exception) {
                 handleException(ex)
             } finally {
                 _showLoading.value = false
             }
+        }
+    }
+
+    private suspend fun getCachedAlbum() {
+        try {
+            val albumDto = getCachedAlbumUseCase.invoke(albumName = albumName)
+            _album.value = AlbumDetailsMapper.mapAlbumDtoToAlbumUiModel(albumDto)
+        } catch (ex: Exception) {
+            handleException(ex)
         }
     }
     //endregion

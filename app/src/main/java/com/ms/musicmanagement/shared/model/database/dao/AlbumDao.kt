@@ -18,7 +18,7 @@ interface AlbumDao {
     fun getAllAlbums(): List<Album>
 
     @Query("SELECT * FROM ${DatabaseTable.Album.TABLE_NAME} WHERE ${DatabaseTable.Album.NAME}=:albumName")
-    fun getAlbumById(albumName: String): List<Album>
+    fun getAlbumById(albumName: String): Album
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(album: Album)

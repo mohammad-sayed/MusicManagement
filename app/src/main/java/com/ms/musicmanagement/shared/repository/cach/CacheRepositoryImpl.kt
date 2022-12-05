@@ -18,6 +18,10 @@ class CacheRepositoryImpl(
         return@withContext albumDao.getAllAlbums()
     }
 
+    override suspend fun getAlbumById(albumName: String) = withContext(Dispatchers.IO) {
+        return@withContext albumDao.getAlbumById(albumName = albumName)
+    }
+
     override suspend fun addAlbum(album: Album) = withContext(Dispatchers.IO) {
         albumDao.insert(album)
     }

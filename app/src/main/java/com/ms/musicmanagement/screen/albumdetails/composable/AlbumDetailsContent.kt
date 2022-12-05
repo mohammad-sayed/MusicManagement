@@ -39,6 +39,7 @@ fun AlbumsDetailsContent(
         }
         item {
             Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
                 text = album?.artistName ?: "",
                 style = MaterialTheme.typography.subtitle1,
             )

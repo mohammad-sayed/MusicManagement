@@ -1,7 +1,9 @@
 package com.ms.musicmanagement.koin
 
-import com.ms.musicmanagement.screen.albumdetails.usecase.GetAlbumInfoUseCase
-import com.ms.musicmanagement.screen.albumdetails.usecase.GetAlbumInfoUseCaseImpl
+import com.ms.musicmanagement.screen.albumdetails.usecase.getalbuminfo.GetAlbumInfoUseCase
+import com.ms.musicmanagement.screen.albumdetails.usecase.getalbuminfo.GetAlbumInfoUseCaseImpl
+import com.ms.musicmanagement.screen.albumdetails.usecase.getcachedalbum.GetCachedAlbumUseCase
+import com.ms.musicmanagement.screen.albumdetails.usecase.getcachedalbum.GetCachedAlbumUseCaseImpl
 import com.ms.musicmanagement.screen.artistsearch.usecase.searchforartist.SearchForArtistUseCase
 import com.ms.musicmanagement.screen.artistsearch.usecase.searchforartist.SearchForArtistUseCaseImpl
 import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCase
@@ -55,6 +57,11 @@ val useCaseModule = module {
     }
     factory<GetCachedAlbumsUseCase> {
         GetCachedAlbumsUseCaseImpl(
+            cacheRepository = get()
+        )
+    }
+    factory<GetCachedAlbumUseCase> {
+        GetCachedAlbumUseCaseImpl(
             cacheRepository = get()
         )
     }

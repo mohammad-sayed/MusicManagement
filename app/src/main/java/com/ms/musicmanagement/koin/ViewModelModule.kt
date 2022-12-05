@@ -42,7 +42,8 @@ val viewModelModule = module {
         AlbumDetailsViewModel(
             appContext = androidApplication(),
             backStackEntryBundle = bundle,
-            getAlbumInfoUseCase = get()
+            getAlbumInfoUseCase = get(),
+            getCachedAlbumUseCase = get()
         )
     }
 }

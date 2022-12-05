@@ -1,8 +1,7 @@
-package com.ms.musicmanagement.screen.albumdetails.usecase
+package com.ms.musicmanagement.screen.albumdetails.usecase.getalbuminfo
 
 import com.ms.musicmanagement.shared.model.backend.ImageSize
 import com.ms.musicmanagement.shared.model.business.dto.AlbumDto
-import com.ms.musicmanagement.shared.model.business.dto.ArtistDto
 import com.ms.musicmanagement.shared.repository.lastfm.LastFMRepository
 
 class GetAlbumInfoUseCaseImpl(
