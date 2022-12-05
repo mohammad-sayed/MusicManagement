@@ -1,47 +1,36 @@
-package com.ms.musicmanagement.screen.artisttopalbums
+package com.ms.musicmanagement.screen.savedalbums
 
 import android.app.Application
-import android.os.Bundle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.ms.musicmanagement.screen.albumdetails.mapper.AlbumDetailsMapper
 import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCase
 import com.ms.musicmanagement.screen.artisttopalbums.mapper.ArtistTopAlbumsMapper
 import com.ms.musicmanagement.screen.artisttopalbums.uimodel.AlbumUiModel
+import com.ms.musicmanagement.screen.savedalbums.usecase.getcachedalbums.GetCachedAlbumsUseCase
 import com.ms.musicmanagement.shared.base.BaseViewModel
 import com.ms.musicmanagement.shared.base.NavControllerConsumer
 import com.ms.musicmanagement.shared.model.business.dto.AlbumDto
 import com.ms.musicmanagement.shared.navigation.AppNavDestination
-import com.ms.musicmanagement.shared.navigation.ArtistTopAlbumsNavComposableDestination
 import com.ms.musicmanagement.shared.usecase.cachealbum.CacheAlbumUseCase
 import com.ms.musicmanagement.shared.usecase.deletecachedalbum.DeleteAlbumUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-class ArtistTopAlbumsViewModel(
+class SavedAlbumsViewModel(
     appContext: Application,
-    backStackEntryBundle: Bundle?,
     private val getArtistTopAlbumsUseCase: GetArtistTopAlbumsUseCase,
+    private val getCachedAlbumsUseCase: GetCachedAlbumsUseCase,
     private val cacheAlbumUseCase: CacheAlbumUseCase,
     private val deleteAlbumUseCase: DeleteAlbumUseCase
 ) : BaseViewModel(
     appContext = appContext
 ), NavControllerConsumer {
-    private val arguments: ArtistTopAlbumsNavComposableDestination.ArtistTopAlbumsArguments
-    val artistName: String
-
     init {
-        arguments = AppNavDestination.ArtistTopAlbums.parseArguments(backStackEntryBundle)
-        artistName = arguments.artistName ?: ""
-        getTopAlbums()
+        getCachedAlbums()
     }
 
-
-    private val _topAlbums: MutableStateFlow<List<AlbumUiModel>> = MutableStateFlow(emptyList())
-    val topAlbums = _topAlbums.asStateFlow()
+    private val _albums: MutableStateFlow<List<AlbumUiModel>> = MutableStateFlow(emptyList())
+    val albums = _albums.asStateFlow()
 
     private var navController: NavController? = null
     private var albumDtoList: List<AlbumDto> = emptyList()
@@ -59,9 +48,9 @@ class ArtistTopAlbumsViewModel(
 
     fun toggleIsFavorite(albumUiModel: AlbumUiModel) {
         viewModelScope.launch {
-            val albumIndex = _topAlbums.value.indexOfFirst { it.name == albumUiModel.name }
+            val albumIndex = _albums.value.indexOfFirst { it.name == albumUiModel.name }
             if (albumIndex > -1) {
-                val item = _topAlbums.value[albumIndex]
+                val item = _albums.value[albumIndex]
                 val newIsFavorite = !item.isFavorite
                 val isUpdated = if (newIsFavorite) {
                     cacheAlbum(albumIndex)
@@ -69,8 +58,8 @@ class ArtistTopAlbumsViewModel(
                     deleteAlbum(albumUiModel.name)
                 }
                 if (isUpdated) {
-                    val mutableList = _topAlbums.value.toMutableList()
-                    _topAlbums.update {
+                    val mutableList = _albums.value.toMutableList()
+                    _albums.update {
                         mutableList[albumIndex] = item.copy(isFavorite = newIsFavorite)
                         mutableList
                     }
@@ -88,18 +77,12 @@ class ArtistTopAlbumsViewModel(
     //endregion
 
     //region Private methods
-    private fun getTopAlbums() {
+    private fun getCachedAlbums() {
         viewModelScope.launch {
-            try {
-                _showLoading.value = true
-                albumDtoList = getArtistTopAlbumsUseCase(artistName = artistName)
-                _topAlbums.value = albumDtoList.map {
-                    ArtistTopAlbumsMapper.mapAlbumDtoToAlbumUiModel(it)
+            getCachedAlbumsUseCase().collect { albumsDtoList ->
+                _albums.value = albumsDtoList.map { albumDto ->
+                    ArtistTopAlbumsMapper.mapAlbumDtoToAlbumUiModel(albumDto)
                 }
-            } catch (ex: Exception) {
-                handleException(ex)
-            } finally {
-                _showLoading.value = false
             }
         }
     }

@@ -37,13 +37,11 @@ fun AlbumsDetailsContent(
                 style = MaterialTheme.typography.h4,
             )
         }
-        album?.artist?.let { artist ->
-            item {
-                ArtistInfo(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    artist = artist
-                )
-            }
+        item {
+            Text(
+                text = album?.artistName ?: "",
+                style = MaterialTheme.typography.subtitle1,
+            )
         }
         item {
             Text(
@@ -84,34 +82,6 @@ private fun AlbumImage(
             album.name
         )
     )
-}
-
-@Composable
-private fun ArtistInfo(
-    modifier: Modifier = Modifier,
-    artist: ArtistUiModel
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (artist.imageUrl != null) {
-            CoilImage(
-                modifier = Modifier
-                    .size(40.dp)
-                    .padding(end = 16.dp),
-                imageUrl = artist.imageUrl,
-                contentDescription = stringResource(
-                    id = R.string.image_description_album_image_format,
-                    artist.name
-                )
-            )
-        }
-        Text(
-            text = artist.name,
-            style = MaterialTheme.typography.subtitle1,
-        )
-    }
 }
 
 @Composable

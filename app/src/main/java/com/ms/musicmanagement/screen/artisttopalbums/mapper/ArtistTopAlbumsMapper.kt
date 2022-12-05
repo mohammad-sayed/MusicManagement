@@ -9,6 +9,7 @@ object ArtistTopAlbumsMapper {
             id = albumDto.id,
             name = albumDto.name,
             mbid = albumDto.mbid,
+            artistName = albumDto.artistName,
             mediumImageUrl = albumDto.mediumImageUrl,
             largeImageUrl = albumDto.largeImageUrl,
             isFavorite = albumDto.isFavorite

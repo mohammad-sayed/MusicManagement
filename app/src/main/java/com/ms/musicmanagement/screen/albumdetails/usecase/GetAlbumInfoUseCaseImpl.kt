@@ -23,11 +23,7 @@ class GetAlbumInfoUseCaseImpl(
             mediumImageUrl = response.album.imageResolutions.firstOrNull { it.size == ImageSize.MEDIUM }?.url,
             largeImageUrl = response.album.imageResolutions.firstOrNull { it.size == ImageSize.LARGE }?.url,
             tracks = response.album.tracks.tracksList.map { it.name },
-            artistDto = ArtistDto(
-                id = response.album.artist,
-                name = response.album.artist,
-                imageUrl = null
-            ),
+            artistName = response.album.artist,
             isFavorite = false
         )
     }

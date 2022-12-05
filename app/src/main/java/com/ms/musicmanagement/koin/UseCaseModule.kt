@@ -6,6 +6,8 @@ import com.ms.musicmanagement.screen.artistsearch.usecase.searchforartist.Search
 import com.ms.musicmanagement.screen.artistsearch.usecase.searchforartist.SearchForArtistUseCaseImpl
 import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCase
 import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCaseImpl
+import com.ms.musicmanagement.screen.savedalbums.usecase.getcachedalbums.GetCachedAlbumsUseCaseImpl
+import com.ms.musicmanagement.screen.savedalbums.usecase.getcachedalbums.GetCachedAlbumsUseCase
 import com.ms.musicmanagement.shared.usecase.cachealbum.CacheAlbumUseCase
 import com.ms.musicmanagement.shared.usecase.cachealbum.CacheAlbumUseCaseImpl
 import com.ms.musicmanagement.shared.usecase.deletecachedalbum.DeleteAlbumUseCase
@@ -48,6 +50,11 @@ val useCaseModule = module {
     }
     factory<DeleteAlbumUseCase> {
         DeleteAlbumUseCaseImpl(
+            cacheRepository = get()
+        )
+    }
+    factory<GetCachedAlbumsUseCase> {
+        GetCachedAlbumsUseCaseImpl(
             cacheRepository = get()
         )
     }

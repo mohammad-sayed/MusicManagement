@@ -9,11 +9,7 @@ object AlbumDetailsMockData {
         mbid = "12",
         largeImageUrl = "https://lastfm.freetls.fastly.net/i/u/174s/3b54885952161aaea4ce2965b2db1638.png",
         name = "Believe",
-        artist = ArtistUiModel(
-            id = "1",
-            name = "Cher",
-            imageUrl = "https://lastfm.freetls.fastly.net/i/u/64s/2a96cbd8b46e442fc41c2b86b821562f.png"
-        ),
+        artistName = "Cher",
         tracks = listOf(
             "track 1",
             "track 2"

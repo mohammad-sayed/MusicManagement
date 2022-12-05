@@ -1,24 +1,20 @@
-package com.ms.musicmanagement.screen.artisttopalbums
+package com.ms.musicmanagement.screen.savedalbums
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import com.ms.musicmanagement.shared.base.BaseViewModel
 import com.ms.musicmanagement.shared.ui.composable.AlbumsListContent
 import com.ms.musicmanagement.shared.ui.composable.BaseScreen
 
 @Composable
-fun ArtistTopAlbumsScreen(
-    modifier: Modifier = Modifier,
-    viewModel: ArtistTopAlbumsViewModel
+fun SavedAlbumsScreen(
+    viewModel: SavedAlbumsViewModel
 ) {
     BaseScreen(
         viewModel = viewModel,
         content = {
             AlbumsListContent(
-                modifier = modifier.padding(top = 16.dp),
-                albums = viewModel.topAlbums.collectAsState().value,
+                albums = viewModel.albums.collectAsState().value,
                 onAlbumSelected = viewModel::showAlbumDetails,
                 onToggleIsFavorite = viewModel::toggleIsFavorite
             )

@@ -13,13 +13,13 @@ class CacheAlbumUseCaseImpl(
     ) {
         cacheRepository.addAlbum(
             Album(
-                id = albumDto.id,
+                id = albumDto.name,
                 name = albumDto.name,
                 mbid = albumDto.mbid,
                 tracks = albumDto.tracks ?: emptyList(),
                 mediumImageUrl = albumDto.mediumImageUrl,
                 largeImageUrl = albumDto.largeImageUrl,
-                artistName = albumDto.artistDto?.name ?: "",
+                artistName = albumDto.artistName,
             )
         )
     }

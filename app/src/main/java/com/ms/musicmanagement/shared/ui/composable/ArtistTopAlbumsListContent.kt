@@ -1,4 +1,4 @@
-package com.ms.musicmanagement.screen.artisttopalbums.composable
+package com.ms.musicmanagement.shared.ui.composable
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -19,11 +19,10 @@ import androidx.compose.ui.unit.dp
 import com.ms.musicmanagement.R
 import com.ms.musicmanagement.screen.artisttopalbums.ArtistTopAlbumsMockData
 import com.ms.musicmanagement.screen.artisttopalbums.uimodel.AlbumUiModel
-import com.ms.musicmanagement.shared.ui.composable.CoilImage
 import com.ms.musicmanagement.shared.ui.theme.MusicManagementTheme
 
 @Composable
-fun ArtistTopAlbumsContent(
+fun AlbumsListContent(
     modifier: Modifier = Modifier,
     albums: List<AlbumUiModel>,
     onAlbumSelected: (AlbumUiModel) -> Unit,
@@ -108,7 +107,7 @@ private fun FavoriteIconButton(
 @Composable
 private fun ArtistTopAlbumsContentPreview() {
     MusicManagementTheme {
-        ArtistTopAlbumsContent(
+        AlbumsListContent(
             albums = ArtistTopAlbumsMockData.topAlbums,
             onAlbumSelected = {},
             onToggleIsFavorite = {}
