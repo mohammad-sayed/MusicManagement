@@ -34,7 +34,8 @@ val viewModelModule = module {
             backStackEntryBundle = bundle,
             getArtistTopAlbumsUseCase = get(),
             cacheAlbumUseCase = get(),
-            deleteAlbumUseCase = get()
+            deleteAlbumUseCase = get(),
+            getAlbumInfoUseCase = get()
         )
     }
 

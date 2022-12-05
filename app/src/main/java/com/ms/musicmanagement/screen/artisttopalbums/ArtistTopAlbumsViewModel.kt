@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.ms.musicmanagement.screen.albumdetails.mapper.AlbumDetailsMapper
+import com.ms.musicmanagement.screen.albumdetails.usecase.getalbuminfo.GetAlbumInfoUseCase
 import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCase
 import com.ms.musicmanagement.screen.artisttopalbums.mapper.ArtistTopAlbumsMapper
 import com.ms.musicmanagement.screen.artisttopalbums.uimodel.AlbumUiModel
@@ -25,6 +26,7 @@ class ArtistTopAlbumsViewModel(
     appContext: Application,
     backStackEntryBundle: Bundle?,
     private val getArtistTopAlbumsUseCase: GetArtistTopAlbumsUseCase,
+    private val getAlbumInfoUseCase: GetAlbumInfoUseCase,
     private val cacheAlbumUseCase: CacheAlbumUseCase,
     private val deleteAlbumUseCase: DeleteAlbumUseCase
 ) : BaseViewModel(
@@ -104,10 +106,27 @@ class ArtistTopAlbumsViewModel(
         }
     }
 
+    private suspend fun getAlbumsInfo(albumName: String, artistName: String): AlbumDto? {
+        try {
+            return getAlbumInfoUseCase(
+                artistName = artistName,
+                albumName = albumName
+            )
+        } catch (ex: Exception) {
+            handleException(ex)
+            return null
+        }
+    }
+
     private suspend fun cacheAlbum(albumIndex: Int): Boolean {
+        val album = albumDtoList[albumIndex]
+        val albumDtoWithTracks =
+            getAlbumsInfo(artistName = album.artistName, albumName = album.name)
         return try {
-            cacheAlbumUseCase(albumDtoList[albumIndex])
-            true
+            albumDtoWithTracks?.let {
+                cacheAlbumUseCase(albumDtoWithTracks)
+                true
+            } ?: false
         } catch (ex: Exception) {
             false
         }
