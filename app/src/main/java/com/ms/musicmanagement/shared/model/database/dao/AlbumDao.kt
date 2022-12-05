@@ -12,7 +12,10 @@ import kotlinx.coroutines.flow.Flow
 interface AlbumDao {
 
     @Query("SELECT * FROM ${DatabaseTable.Album.TABLE_NAME}")
-    fun getAllAlbums(): Flow<List<Album>>
+    fun getAllAlbumsFlow(): Flow<List<Album>>
+
+    @Query("SELECT * FROM ${DatabaseTable.Album.TABLE_NAME}")
+    fun getAllAlbums(): List<Album>
 
     @Query("SELECT * FROM ${DatabaseTable.Album.TABLE_NAME} WHERE ${DatabaseTable.Album.NAME}=:albumName")
     fun getAlbumById(albumName: String): List<Album>

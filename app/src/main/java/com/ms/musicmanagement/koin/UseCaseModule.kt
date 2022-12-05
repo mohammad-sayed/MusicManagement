@@ -23,7 +23,8 @@ val useCaseModule = module {
     //region Artist Top Albums
     factory<GetArtistTopAlbumsUseCase> {
         GetArtistTopAlbumsUseCaseImpl(
-            lastFMRepository = get()
+            lastFMRepository = get(),
+            cacheRepository = get()
         )
     }
     //endregion

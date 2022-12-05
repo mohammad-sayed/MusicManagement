@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.ms.musicmanagement.shared.model.database.Album
+import com.ms.musicmanagement.shared.model.database.DatabaseConverter
 import com.ms.musicmanagement.shared.model.database.DatabaseTable
 import com.ms.musicmanagement.shared.model.database.dao.AlbumDao
 
@@ -14,6 +16,7 @@ import com.ms.musicmanagement.shared.model.database.dao.AlbumDao
     version = 1,
     exportSchema = false
 )
+@TypeConverters(DatabaseConverter::class)
 abstract class MusicManagementRoomDatabase : RoomDatabase() {
 
     abstract fun albumDao(): AlbumDao
@@ -31,7 +34,7 @@ abstract class MusicManagementRoomDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     MusicManagementRoomDatabase::class.java,
-                    "word_database"
+                    "music_management_database"
                 ).build()
                 INSTANCE = instance
                 // return instance
