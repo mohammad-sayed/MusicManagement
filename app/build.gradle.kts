@@ -5,6 +5,7 @@ import org.jetbrains.kotlin.konan.properties.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id ("kotlin-kapt")
 }
 
 private object BuildTypes {
@@ -81,7 +82,7 @@ android {
 /***
  * Create BASE_URL for API requests
  */
-fun prepareBaseUrl(baseAppModuleExtension: BaseAppModuleExtension){
+fun prepareBaseUrl(baseAppModuleExtension: BaseAppModuleExtension) {
     val gradleProperties = Properties().apply {
         load(project.rootProject.file("gradle.properties").inputStream())
     }
@@ -146,6 +147,12 @@ dependencies {
     implementation(Dependencies.coil)
     //Flow layout
     implementation(Dependencies.flowLayout)
+
+    //Room
+    implementation(Dependencies.room)
+    kapt(Dependencies.roomCompiler)
+    implementation(Dependencies.roomKtx)
+
 
     //To allow using of java.time classes
     coreLibraryDesugaring(Dependencies.androidDesugaring)

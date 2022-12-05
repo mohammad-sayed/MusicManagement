@@ -13,6 +13,7 @@ object Versions {
     const val lifecycleVersion = "2.5.1"
     const val materialVersion = "1.6.1"
     const val retrofitVersion = "2.9.0"
+    const val roomVersion = "2.4.3"
     const val loggingInterceptorVersion = "4.10.0"
     const val testExtVersion = "1.1.3"
     const val testEspressoCoreVersion = "3.4.0"

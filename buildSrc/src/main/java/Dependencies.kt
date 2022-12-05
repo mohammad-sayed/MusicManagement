@@ -36,6 +36,9 @@ object Dependencies {
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}"
     const val retrofitConverterGson =
         "com.squareup.retrofit2:converter-gson:${Versions.retrofitVersion}"
+    const val room = "androidx.room:room-runtime:${Versions.testExtVersion}"
+    const val roomCompiler = "androidx.room:room-runtime:${Versions.roomVersion}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.roomVersion}"
     const val testExt = "androidx.test.ext:junit:${Versions.testExtVersion}"
     const val testEspressoCore =
         "androidx.test.espresso:espresso-core:${Versions.testEspressoCoreVersion}"
