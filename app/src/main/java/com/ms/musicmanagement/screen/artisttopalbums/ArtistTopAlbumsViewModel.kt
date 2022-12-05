@@ -14,6 +14,7 @@ import com.ms.musicmanagement.shared.model.business.dto.AlbumDto
 import com.ms.musicmanagement.shared.navigation.AppNavDestination
 import com.ms.musicmanagement.shared.navigation.ArtistTopAlbumsNavComposableDestination
 import com.ms.musicmanagement.shared.usecase.cachealbum.CacheAlbumUseCase
+import com.ms.musicmanagement.shared.usecase.deletecachedalbum.DeleteAlbumUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +25,8 @@ class ArtistTopAlbumsViewModel(
     appContext: Application,
     backStackEntryBundle: Bundle?,
     private val getArtistTopAlbumsUseCase: GetArtistTopAlbumsUseCase,
-    private val cacheAlbumUseCase: CacheAlbumUseCase
+    private val cacheAlbumUseCase: CacheAlbumUseCase,
+    private val deleteAlbumUseCase: DeleteAlbumUseCase
 ) : BaseViewModel(
     appContext = appContext
 ), NavControllerConsumer {
@@ -49,8 +51,7 @@ class ArtistTopAlbumsViewModel(
     fun showAlbumDetails(albumUiModel: AlbumUiModel) {
         navController?.navigate(
             route = AppNavDestination.AlbumDetails.getNavigationRoute(
-                artistName = artistName,
-                albumName = albumUiModel.name
+                artistName = artistName, albumName = albumUiModel.name
             )
         )
     }
@@ -61,11 +62,15 @@ class ArtistTopAlbumsViewModel(
             if (albumIndex > -1) {
                 val item = _topAlbums.value[albumIndex]
                 val newIsFavorite = !item.isFavorite
-                val isUpdated = cacheAlbum(albumIndex)
+                val isUpdated = if (newIsFavorite) {
+                    cacheAlbum(albumIndex)
+                } else {
+                    deleteAlbum(albumUiModel.name)
+                }
                 if (isUpdated) {
                     val mutableList = _topAlbums.value.toMutableList()
                     _topAlbums.update {
-                        mutableList[albumIndex] = item.copy(isFavorite = !item.isFavorite)
+                        mutableList[albumIndex] = item.copy(isFavorite = newIsFavorite)
                         mutableList
                     }
                 }
@@ -86,7 +91,7 @@ class ArtistTopAlbumsViewModel(
         viewModelScope.launch {
             try {
                 _showLoading.value = true
-                albumDtoList = getArtistTopAlbumsUseCase.invoke(artistName = artistName)
+                albumDtoList = getArtistTopAlbumsUseCase(artistName = artistName)
                 _topAlbums.value = albumDtoList.map {
                     ArtistTopAlbumsMapper.mapAlbumDtoToAlbumUiModel(it)
                 }
@@ -100,7 +105,16 @@ class ArtistTopAlbumsViewModel(
 
     private suspend fun cacheAlbum(albumIndex: Int): Boolean {
         return try {
-            cacheAlbumUseCase.invoke(albumDtoList[albumIndex])
+            cacheAlbumUseCase(albumDtoList[albumIndex])
+            true
+        } catch (ex: Exception) {
+            false
+        }
+    }
+
+    private suspend fun deleteAlbum(albumName: String): Boolean {
+        return try {
+            deleteAlbumUseCase(albumName = albumName)
             true
         } catch (ex: Exception) {
             false

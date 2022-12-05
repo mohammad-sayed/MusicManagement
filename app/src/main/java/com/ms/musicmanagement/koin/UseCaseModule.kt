@@ -8,6 +8,8 @@ import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.
 import com.ms.musicmanagement.screen.artisttopalbums.usecase.getartisttopalbums.GetArtistTopAlbumsUseCaseImpl
 import com.ms.musicmanagement.shared.usecase.cachealbum.CacheAlbumUseCase
 import com.ms.musicmanagement.shared.usecase.cachealbum.CacheAlbumUseCaseImpl
+import com.ms.musicmanagement.shared.usecase.deletecachedalbum.DeleteAlbumUseCase
+import com.ms.musicmanagement.shared.usecase.deletecachedalbum.DeleteAlbumUseCaseImpl
 import org.koin.dsl.module
 
 /**
@@ -25,8 +27,7 @@ val useCaseModule = module {
     //region Artist Top Albums
     factory<GetArtistTopAlbumsUseCase> {
         GetArtistTopAlbumsUseCaseImpl(
-            lastFMRepository = get(),
-            cacheRepository = get()
+            lastFMRepository = get(), cacheRepository = get()
         )
     }
     //endregion
@@ -37,8 +38,16 @@ val useCaseModule = module {
             lastFMRepository = get()
         )
     }
+    //endregion
+
+    //region Cache Albums
     factory<CacheAlbumUseCase> {
         CacheAlbumUseCaseImpl(
+            cacheRepository = get()
+        )
+    }
+    factory<DeleteAlbumUseCase> {
+        DeleteAlbumUseCaseImpl(
             cacheRepository = get()
         )
     }
