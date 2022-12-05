@@ -18,7 +18,8 @@ class GetArtistTopAlbumsUseCaseImpl(
                     id = album.name,
                     name = album.name,
                     mediumImageUrl = album.imageResolutions.firstOrNull { it.size == ImageSize.MEDIUM }?.url,
-                    largeImageUrl = album.imageResolutions.firstOrNull { it.size == ImageSize.LARGE }?.url
+                    largeImageUrl = album.imageResolutions.firstOrNull { it.size == ImageSize.LARGE }?.url,
+                    isFavorite = false
                 )
             }
         }

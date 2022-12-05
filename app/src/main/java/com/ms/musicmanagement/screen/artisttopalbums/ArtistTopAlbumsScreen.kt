@@ -22,6 +22,7 @@ fun ArtistTopAlbumsScreen(
                 modifier = modifier.padding(top = 16.dp),
                 albums = viewModel.topAlbums.collectAsState().value,
                 onAlbumSelected = viewModel::showAlbumDetails,
+                onToggleIsFavorite = viewModel::toggleIsFavorite
             )
         }
     )

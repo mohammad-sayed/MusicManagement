@@ -6,5 +6,6 @@ data class AlbumDto(
     val mediumImageUrl: String?,
     val largeImageUrl: String?,
     val artistDto: ArtistDto? = null,
-    val tracks: List<String>? = null
+    val tracks: List<String>? = null,
+    val isFavorite: Boolean
 )

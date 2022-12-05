@@ -5,4 +5,5 @@ data class AlbumUiModel(
     val name: String,
     val mediumImageUrl: String?,
     val largeImageUrl: String?,
+    val isFavorite: Boolean,
 )

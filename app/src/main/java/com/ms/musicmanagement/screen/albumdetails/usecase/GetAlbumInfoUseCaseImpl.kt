@@ -26,7 +26,8 @@ class GetAlbumInfoUseCaseImpl(
                 id = response.album.artist,
                 name = response.album.artist,
                 imageUrl = null
-            )
+            ),
+            isFavorite = false
         )
     }
 }

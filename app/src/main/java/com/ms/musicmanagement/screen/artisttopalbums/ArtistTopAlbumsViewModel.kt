@@ -12,7 +12,9 @@ import com.ms.musicmanagement.shared.base.NavControllerConsumer
 import com.ms.musicmanagement.shared.navigation.AppNavDestination
 import com.ms.musicmanagement.shared.navigation.ArtistTopAlbumsNavComposableDestination
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ArtistTopAlbumsViewModel(
@@ -33,7 +35,7 @@ class ArtistTopAlbumsViewModel(
 
 
     private val _topAlbums: MutableStateFlow<List<AlbumUiModel>> = MutableStateFlow(emptyList())
-    val topAlbums = _topAlbums.asStateFlow()
+    val topAlbums: StateFlow<List<AlbumUiModel>> = _topAlbums.asStateFlow()
 
     private var navController: NavController? = null
     //region Public methods
@@ -46,6 +48,18 @@ class ArtistTopAlbumsViewModel(
                 albumName = albumUiModel.name
             )
         )
+    }
+
+    fun toggleIsFavorite(albumUiModel: AlbumUiModel) {
+        val albumIndex = _topAlbums.value.indexOfFirst { it.name == albumUiModel.name }
+        if (albumIndex > -1) {
+            val mutableList = _topAlbums.value.toMutableList()
+            _topAlbums.update {
+                val item = it[albumIndex]
+                mutableList[albumIndex] = item.copy(isFavorite = !item.isFavorite)
+                mutableList
+            }
+        }
     }
 
     //region NavControllerConsumer implementation
